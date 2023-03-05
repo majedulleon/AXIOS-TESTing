@@ -5,17 +5,23 @@ import axios from 'axios';
 
 class App extends Component {
 
+  state = {
+    posts: null, //posts is name of the object from where data is coming
+    errMess: null
+  }
+
   componentDidMount() {
 
     //FETCH API EXAMPLE
     // fetch('https://jsonplaceholder.typicode.com/posts')
     //   .then(response => response.json()).then(data => console.log(data))
 
+    console.log("componentsDidMount ", this.state);
     //AXIOS GET EXAMPLE
-    // axios.get('https://jsonplaceholder.typicode.com/posts')
-    //   .then(response => response.data)
-    //   .then(data => console.log(data))
-    //   .catch(error => console.log(error.message));
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.data)
+      .then(data => { this.setState({ posts: data }) })
+      .catch(error => { this.setState({ errMess: error.message }) });
 
     //AXIOS POST EXAMPLE
     // axios.post('https://jsonplaceholder.typicode.com/posts', { title: "Something", body: "Something Else" }).then(response => console.log(response));
@@ -25,9 +31,13 @@ class App extends Component {
 
     //AXIOS DELETE EXAMPLE (/1 is id)
     // axios.delete('https://jsonplaceholder.typicode.com/posts/1')
-    //   .then(response => console.log(response));
+    //   .then(response => console.log(response))
+    //.catch(error => { this.setState({ errMess: error.message }) });
 
+  }
 
+  componentDidUpdate() {
+    console.log("Update ", this.state);
   }
 
   render() {
